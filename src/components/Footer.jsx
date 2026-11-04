@@ -18,11 +18,6 @@ export default function Footer() {
                 Products
               </a>
             </li>
-            <li>
-              <a href="/cart" className="hover:text-gold-light transition-colors">
-                Cart
-              </a>
-            </li>
           </ul>
         </div>
 

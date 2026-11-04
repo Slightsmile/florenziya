@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 
 export default function ProductCard({ product }) {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const gallery = product.images?.length ? product.images : [product.image];
+  const [activeImage, setActiveImage] = useState(gallery[0]);
 
   const handleAdd = () => {
     addToCart(product, quantity);
     setAdded(true);
+    openCart();
     setTimeout(() => setAdded(false), 1500);
   };
 
@@ -16,12 +19,26 @@ export default function ProductCard({ product }) {
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-sand">
       <div className="relative overflow-hidden aspect-square bg-sand">
         <img
-          src={product.image}
+          src={activeImage}
           alt={product.name}
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover transition-transform duration-500"
         />
+        {gallery.length > 1 && (
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {gallery.map((img) => (
+              <button
+                key={img}
+                onClick={() => setActiveImage(img)}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  activeImage === img ? "bg-ink" : "bg-ink/30 hover:bg-ink/50"
+                }`}
+                aria-label="Show image"
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className="p-5">
         <h3 className="font-serif text-xl font-semibold text-ink mb-1">{product.name}</h3>

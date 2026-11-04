@@ -189,8 +189,13 @@ export default function Checkout() {
             <h2 className="font-serif text-xl font-semibold mb-4">Order Summary</h2>
             <div className="space-y-3 mb-4">
               {items.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span className="text-ink/70">
+                <div key={item.id} className="flex items-center gap-3 text-sm">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-12 h-12 rounded-lg object-cover flex-shrink-0 border border-sand"
+                  />
+                  <span className="flex-1 text-ink/70 min-w-0 truncate">
                     {item.name} × {item.quantity}
                   </span>
                   <span className="font-medium">

@@ -1,45 +1,37 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 export default function Header() {
-  const { itemCount } = useCart();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { itemCount, openCart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const scrollToProducts = (e) => {
+  const goToTop = (e) => {
     e.preventDefault();
-    setMenuOpen(false);
     if (location.pathname !== "/") {
       navigate("/");
-      setTimeout(() => {
-        document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
     } else {
-      document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   return (
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-sand">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 sm:h-20">
-        <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
-          <img src="/logo-full.png" alt="Florenziya" className="h-10 sm:h-12 object-contain" />
-        </Link>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-3 items-center h-16 sm:h-20">
+        <a href="/" onClick={goToTop} className="flex items-center justify-start">
+          <img src="/logo.png" alt="Florenziya" className="h-9 sm:h-11 object-contain" />
+        </a>
 
-        <nav className="hidden md:flex items-center gap-8 font-medium text-ink/80">
-          <Link to="/" className="hover:text-gold transition-colors">Home</Link>
-          <a href="#products" onClick={scrollToProducts} className="hover:text-gold transition-colors">
-            Products
-          </a>
-        </nav>
+        <a href="/" onClick={goToTop} className="flex items-center justify-center">
+          <img src="/logo-text.png" alt="Florenziya" className="h-6 sm:h-7 object-contain" />
+        </a>
 
-        <div className="flex items-center gap-3">
-          <Link
-            to="/cart"
+        <div className="flex items-center justify-end">
+          <button
+            onClick={openCart}
             className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-sand transition-colors"
-            aria-label="View cart"
+            aria-label="Open cart"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,34 +52,9 @@ export default function Header() {
                 {itemCount}
               </span>
             )}
-          </Link>
-
-          <button
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-sand transition-colors"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Toggle menu"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.6} stroke="currentColor">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              )}
-            </svg>
           </button>
         </div>
       </div>
-
-      {menuOpen && (
-        <nav className="md:hidden flex flex-col px-4 pb-4 gap-3 border-t border-sand bg-cream">
-          <Link to="/" onClick={() => setMenuOpen(false)} className="py-2 font-medium">
-            Home
-          </Link>
-          <a href="#products" onClick={scrollToProducts} className="py-2 font-medium">
-            Products
-          </a>
-        </nav>
-      )}
     </header>
   );
 }
