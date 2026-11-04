@@ -20,11 +20,11 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-sand">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-3 items-center h-16 sm:h-20">
         <a href="/" onClick={goToTop} className="flex items-center justify-start">
-          <img src="/logo.png" alt="Florenziya" className="h-9 sm:h-11 object-contain" />
+          <img src="/logo-mark.png" alt="Florenziya" className="h-10 sm:h-14 object-contain" />
         </a>
 
         <a href="/" onClick={goToTop} className="flex items-center justify-center">
-          <img src="/logo-text.png" alt="Florenziya" className="h-6 sm:h-7 object-contain" />
+          <img src="/logo-wordmark.png" alt="Florenziya" className="h-5 sm:h-6 object-contain" />
         </a>
 
         <div className="flex items-center justify-end">

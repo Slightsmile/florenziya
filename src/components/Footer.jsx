@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="bg-charcoal text-cream">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-8">
         <div>
-          <img src="/logo-full.png" alt="Florenziya" className="h-10 mb-4 brightness-0 invert" />
+          <img src="/logo-full-tight.png" alt="Florenziya" className="h-20 mb-4 brightness-0 invert" />
           <p className="text-cream/70 text-sm max-w-xs">
             Florenziya brings premium, fashion-forward sunglasses to Bangladesh —
             crafted for those who dare to stand out.

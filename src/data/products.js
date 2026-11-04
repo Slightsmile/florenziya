@@ -1,52 +1,8 @@
 export const products = [
   {
-    id: 1,
-    name: "Black Funky",
-    price: 1200,
-    description: "Bold black frames with a playful, statement-making silhouette.",
-    image: "/products/black-funky.webp",
-    images: ["/products/black-funky.webp", "/products/black-funky-2.webp"],
-  },
-  {
-    id: 2,
-    name: "Black Serenity",
-    price: 1300,
-    description: "Sleek all-black design for a calm, confident everyday look.",
-    image: "/products/black-serenity.webp",
-    images: [
-      "/products/black-serenity.webp",
-      "/products/black-serenity-2.webp",
-      "/products/black-serenity-3.webp",
-    ],
-  },
-  {
-    id: 3,
-    name: "BluishPink Serenity",
-    price: 1350,
-    description: "Soft bluish-pink tones for a dreamy, fashion-forward vibe.",
-    image: "/products/bluishpink-serenity.webp",
-    images: [
-      "/products/bluishpink-serenity.webp",
-      "/products/bluishpink-serenity-2.webp",
-      "/products/bluishpink-serenity-3.webp",
-    ],
-  },
-  {
-    id: 4,
-    name: "Brown Glow",
-    price: 1250,
-    description: "Warm brown hues that glow with a classic, timeless charm.",
-    image: "/products/brown-glow.webp",
-    images: [
-      "/products/brown-glow.webp",
-      "/products/brown-glow-2.webp",
-      "/products/brown-glow-3.webp",
-    ],
-  },
-  {
     id: 5,
     name: "Leopard Funky",
-    price: 1400,
+    price: 350,
     description: "Wild leopard print for those who love to stand out.",
     image: "/products/leopard-funky.webp",
     images: [
@@ -56,21 +12,9 @@ export const products = [
     ],
   },
   {
-    id: 6,
-    name: "Roseate Glow",
-    price: 1300,
-    description: "Rosy, radiant tones for a soft romantic edge.",
-    image: "/products/roseate-glow.webp",
-    images: [
-      "/products/roseate-glow.webp",
-      "/products/roseate-glow-2.webp",
-      "/products/roseate-glow-3.webp",
-    ],
-  },
-  {
     id: 7,
     name: "Transparent Funky",
-    price: 1150,
+    price: 350,
     description: "Clear, modern frames with a fun and youthful twist.",
     image: "/products/transparent-funky.webp",
     images: [
@@ -82,13 +26,69 @@ export const products = [
   {
     id: 8,
     name: "White Funky",
-    price: 1200,
+    price: 350,
     description: "Crisp white frames for a clean, eye-catching finish.",
     image: "/products/white-funky.webp",
     images: [
       "/products/white-funky.webp",
       "/products/white-funky-2.webp",
       "/products/white-funky-3.webp",
+    ],
+  },
+  {
+    id: 1,
+    name: "Black Funky",
+    price: 250,
+    description: "Bold black frames with a playful, statement-making silhouette.",
+    image: "/products/black-funky.webp",
+    images: ["/products/black-funky.webp", "/products/black-funky-2.webp"],
+  },
+  {
+    id: 2,
+    name: "Black Serenity",
+    price: 400,
+    description: "Sleek all-black design for a calm, confident everyday look.",
+    image: "/products/black-serenity.webp",
+    images: [
+      "/products/black-serenity.webp",
+      "/products/black-serenity-2.webp",
+      "/products/black-serenity-3.webp",
+    ],
+  },
+  {
+    id: 3,
+    name: "BluishPink Serenity",
+    price: 400,
+    description: "Soft bluish-pink tones for a dreamy, fashion-forward vibe.",
+    image: "/products/bluishpink-serenity.webp",
+    images: [
+      "/products/bluishpink-serenity.webp",
+      "/products/bluishpink-serenity-2.webp",
+      "/products/bluishpink-serenity-3.webp",
+    ],
+  },
+  {
+    id: 4,
+    name: "Brown Glow",
+    price: 400,
+    description: "Warm brown hues that glow with a classic, timeless charm.",
+    image: "/products/brown-glow.webp",
+    images: [
+      "/products/brown-glow.webp",
+      "/products/brown-glow-2.webp",
+      "/products/brown-glow-3.webp",
+    ],
+  },
+  {
+    id: 6,
+    name: "Roseate Glow",
+    price: 400,
+    description: "Rosy, radiant tones for a soft romantic edge.",
+    image: "/products/roseate-glow.webp",
+    images: [
+      "/products/roseate-glow.webp",
+      "/products/roseate-glow-2.webp",
+      "/products/roseate-glow-3.webp",
     ],
   },
 ];
