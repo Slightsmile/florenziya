@@ -1,0 +1,58 @@
+export const products = [
+  {
+    id: 1,
+    name: "Black Funky",
+    price: 1200,
+    description: "Bold black frames with a playful, statement-making silhouette.",
+    image: "/products/black-funky.webp",
+  },
+  {
+    id: 2,
+    name: "Black Serenity",
+    price: 1300,
+    description: "Sleek all-black design for a calm, confident everyday look.",
+    image: "/products/black-serenity.webp",
+  },
+  {
+    id: 3,
+    name: "BluishPink Serenity",
+    price: 1350,
+    description: "Soft bluish-pink tones for a dreamy, fashion-forward vibe.",
+    image: "/products/bluishpink-serenity.webp",
+  },
+  {
+    id: 4,
+    name: "Brown Glow",
+    price: 1250,
+    description: "Warm brown hues that glow with a classic, timeless charm.",
+    image: "/products/brown-glow.webp",
+  },
+  {
+    id: 5,
+    name: "Leopard Funky",
+    price: 1400,
+    description: "Wild leopard print for those who love to stand out.",
+    image: "/products/leopard-funky.webp",
+  },
+  {
+    id: 6,
+    name: "Roseate Glow",
+    price: 1300,
+    description: "Rosy, radiant tones for a soft romantic edge.",
+    image: "/products/roseate-glow.webp",
+  },
+  {
+    id: 7,
+    name: "Transparent Funky",
+    price: 1150,
+    description: "Clear, modern frames with a fun and youthful twist.",
+    image: "/products/transparent-funky.webp",
+  },
+  {
+    id: 8,
+    name: "White Funky",
+    price: 1200,
+    description: "Crisp white frames for a clean, eye-catching finish.",
+    image: "/products/white-funky.webp",
+  },
+];
