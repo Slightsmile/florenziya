@@ -115,21 +115,21 @@ export default function ProductCard({ product }) {
           {formatBDT(product.price)}
         </p>
 
-        <div className="mt-auto flex items-stretch gap-2">
-          <div className="flex items-center border border-sand rounded-full overflow-hidden shrink-0">
+        <div className="mt-auto flex flex-col sm:flex-row sm:items-stretch gap-2">
+          <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start border border-sand rounded-full overflow-hidden">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="w-9 h-10 sm:h-9 flex items-center justify-center text-ink hover:bg-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+              className="flex-1 sm:flex-none sm:w-9 h-10 sm:h-9 flex items-center justify-center text-ink hover:bg-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
               aria-label={`Decrease quantity of ${product.name}`}
             >
               −
             </button>
-            <span className="w-7 text-center font-medium text-sm" aria-label={`Quantity: ${quantity}`}>
+            <span className="flex-1 sm:flex-none sm:w-7 text-center font-medium text-sm" aria-label={`Quantity: ${quantity}`}>
               {quantity}
             </span>
             <button
               onClick={() => setQuantity((q) => Math.min(MAX_QUANTITY_PER_ITEM, q + 1))}
-              className="w-9 h-10 sm:h-9 flex items-center justify-center text-ink hover:bg-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+              className="flex-1 sm:flex-none sm:w-9 h-10 sm:h-9 flex items-center justify-center text-ink hover:bg-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
               aria-label={`Increase quantity of ${product.name}`}
             >
               +
@@ -138,7 +138,7 @@ export default function ProductCard({ product }) {
 
           <button
             onClick={handleAdd}
-            className={`flex-1 min-w-0 h-10 sm:h-auto sm:py-2.5 text-sm sm:text-base font-semibold rounded-full transition-all flex items-center justify-center whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 ${
+            className={`w-full sm:w-auto sm:flex-1 h-10 sm:h-auto sm:py-2.5 text-sm sm:text-base font-semibold rounded-full transition-all flex items-center justify-center whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 ${
               added
                 ? "bg-green-600 text-white"
                 : "bg-ink text-cream hover:bg-gold hover:text-ink"
