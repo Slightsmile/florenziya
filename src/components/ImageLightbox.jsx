@@ -1,9 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+const SWIPE_THRESHOLD = 40;
 
 export default function ImageLightbox({ images, activeImage, onChange, onClose, alt }) {
+  const touchStartX = useRef(null);
+  const activeIdx = images.indexOf(activeImage);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onChange(images[(activeIdx + 1) % images.length]);
+      if (e.key === "ArrowLeft") onChange(images[(activeIdx - 1 + images.length) % images.length]);
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -11,7 +18,21 @@ export default function ImageLightbox({ images, activeImage, onChange, onClose, 
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, [onClose, onChange, images, activeIdx]);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(deltaX) > SWIPE_THRESHOLD && images.length > 1) {
+      if (deltaX < 0) onChange(images[(activeIdx + 1) % images.length]);
+      else onChange(images[(activeIdx - 1 + images.length) % images.length]);
+    }
+    touchStartX.current = null;
+  };
 
   return (
     <div
@@ -28,11 +49,17 @@ export default function ImageLightbox({ images, activeImage, onChange, onClose, 
         </svg>
       </button>
 
-      <div className="max-w-3xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="max-w-3xl w-full flex flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <img
           src={activeImage}
           alt={alt}
-          className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
+          className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl select-none"
+          draggable={false}
         />
 
         {images.length > 1 && (

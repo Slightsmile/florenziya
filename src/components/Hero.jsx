@@ -35,7 +35,7 @@ export default function Hero() {
         <div className="relative animate-fade-up [animation-delay:150ms]">
           <div className="absolute inset-0 bg-gold/20 blur-3xl rounded-full" />
           <img
-            src="/products/black-funky.webp"
+            src="/hero.webp"
             alt="Florenziya sunglasses"
             className="relative rounded-3xl w-full h-72 sm:h-96 object-cover shadow-2xl"
           />
