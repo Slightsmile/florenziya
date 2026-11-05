@@ -12,30 +12,6 @@ export const products = [
     ],
   },
   {
-    id: 2,
-    name: "Aurora Bloom",
-    price: 400,
-    description: "Soft gradient hues that catch the light like a sunrise.",
-    image: "/product-photos/aurora-bloom.webp",
-    images: [
-      "/product-photos/aurora-bloom.webp",
-      "/product-photos/aurora-bloom-2.webp",
-      "/product-photos/aurora-bloom-3.webp",
-    ],
-  },
-  {
-    id: 3,
-    name: "Cocoa Royale",
-    price: 400,
-    description: "Rich warm browns for a refined, classic look.",
-    image: "/product-photos/cocoa-royale.webp",
-    images: [
-      "/product-photos/cocoa-royale.webp",
-      "/product-photos/cocoa-royale-2.webp",
-      "/product-photos/cocoa-royale-3.webp",
-    ],
-  },
-  {
     id: 4,
     name: "Crystal Edge",
     price: 350,
@@ -62,7 +38,7 @@ export const products = [
   {
     id: 6,
     name: "Midnight Cateye",
-    price: 400,
+    price: 250,
     description: "Sultry cat-eye silhouette in deep midnight black.",
     image: "/product-photos/midnight-cateye.webp",
     images: [
@@ -80,6 +56,30 @@ export const products = [
       "/product-photos/noir-bloom.webp",
       "/product-photos/noir-bloom-2.webp",
       "/product-photos/noir-bloom-3.webp",
+    ],
+  },
+  {
+    id: 2,
+    name: "Aurora Bloom",
+    price: 400,
+    description: "Soft gradient hues that catch the light like a sunrise.",
+    image: "/product-photos/aurora-bloom.webp",
+    images: [
+      "/product-photos/aurora-bloom.webp",
+      "/product-photos/aurora-bloom-2.webp",
+      "/product-photos/aurora-bloom-3.webp",
+    ],
+  },
+  {
+    id: 3,
+    name: "Cocoa Royale",
+    price: 400,
+    description: "Rich warm browns for a refined, classic look.",
+    image: "/product-photos/cocoa-royale.webp",
+    images: [
+      "/product-photos/cocoa-royale.webp",
+      "/product-photos/cocoa-royale-2.webp",
+      "/product-photos/cocoa-royale-3.webp",
     ],
   },
   {
