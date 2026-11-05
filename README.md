@@ -3,8 +3,9 @@
 Premium sunglasses e-commerce site for the Bangladesh-based brand Florenziya.
 
 Single-folder project: React (Vite + Tailwind CSS v4) frontend with a Vercel
-serverless API route (`api/orders.js`) that writes placed orders to a Google
-Sheet.
+serverless API route (`api/orders.cjs`) that writes placed orders to a Google
+Sheet. The API prices every order from its own server-side catalog — the
+client sends only product ids and quantities, never prices.
 
 ## Local development
 
@@ -57,13 +58,16 @@ same time without conflicts.
 3. Add the three environment variables above in the Vercel project
    settings (Settings → Environment Variables).
 4. Deploy. Vercel will build the frontend and automatically detect
-   `api/orders.js` as a serverless function at `/api/orders`.
+   `api/orders.cjs` as a serverless function at `/api/orders`.
+
+> After deploying, run `node scripts/test-orders.cjs` to smoke-test the API
+> (needs no Google credentials — googleapis is stubbed).
 
 ## Project structure
 
 ```
 ├── api/
-│   └── orders.js       # Vercel serverless function — validates & saves orders
+│   └── orders.cjs       # Vercel serverless function — validates & saves orders
 ├── public/
 │   ├── logo.png, logo-full.png, logo-text.png
 │   └── products/        # product photos

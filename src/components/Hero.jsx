@@ -1,6 +1,5 @@
 export default function Hero() {
-  const scrollToProducts = (e) => {
-    e.preventDefault();
+  const scrollToProducts = () => {
     document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -23,20 +22,24 @@ export default function Hero() {
           </p>
           <button
             onClick={scrollToProducts}
-            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ink font-semibold px-8 py-3.5 rounded-full transition-all hover:scale-105 shadow-lg shadow-gold/20"
+            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ink font-semibold px-8 py-3.5 rounded-full transition-all hover:scale-105 shadow-lg shadow-gold/20 focus:outline-none focus:ring-2 focus:ring-gold-light focus:ring-offset-2 focus:ring-offset-charcoal"
           >
             Shop Now
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
             </svg>
           </button>
         </div>
 
         <div className="relative animate-fade-up [animation-delay:150ms]">
-          <div className="absolute inset-0 bg-gold/20 blur-3xl rounded-full" />
+          <div className="absolute inset-0 bg-gold/20 blur-3xl rounded-full" aria-hidden="true" />
           <img
             src="/hero.webp"
             alt="Florenziya sunglasses"
+            width={1200}
+            height={800}
+            fetchPriority="high"
+            decoding="async"
             className="relative rounded-3xl w-full h-72 sm:h-96 object-cover shadow-2xl"
           />
         </div>

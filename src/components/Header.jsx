@@ -1,37 +1,24 @@
-import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 export default function Header() {
   const { itemCount, openCart } = useCart();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const goToTop = (e) => {
-    e.preventDefault();
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
 
   return (
     <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-sand">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-3 items-center h-16 sm:h-20">
-        <a href="/" onClick={goToTop} className="flex items-center justify-start">
-          <img src="/logo-mark.png" alt="Florenziya" className="h-10 sm:h-14 object-contain" />
+        <a href="/" className="flex items-center justify-start">
+          <img src="/logo-mark.png" alt="" width={56} height={56} className="h-10 sm:h-14 object-contain" />
         </a>
 
-        <a href="/" onClick={goToTop} className="flex items-center justify-center">
-          <img src="/logo-wordmark.png" alt="Florenziya" className="h-5 sm:h-6 object-contain" />
+        <a href="/" className="flex items-center justify-center" aria-label="Florenziya home">
+          <img src="/logo-wordmark.png" alt="Florenziya" width={120} height={24} className="h-5 sm:h-6 object-contain" />
         </a>
 
         <div className="flex items-center justify-end">
           <button
             onClick={openCart}
-            className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-sand transition-colors"
-            aria-label="Open cart"
+            className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            aria-label={`Open cart${itemCount > 0 ? `, ${itemCount} items` : ""}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +27,7 @@ export default function Header() {
               viewBox="0 0 24 24"
               strokeWidth={1.6}
               stroke="currentColor"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -48,8 +36,8 @@ export default function Header() {
               />
             </svg>
             {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-gold text-white text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {itemCount}
+              <span aria-hidden="true" className="absolute -top-1 -right-1 bg-gold text-white text-[11px] font-bold rounded-full min-w-5 h-5 px-1 flex items-center justify-center">
+                {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
           </button>
@@ -58,3 +46,5 @@ export default function Header() {
     </header>
   );
 }
+
+

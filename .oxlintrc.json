@@ -1,8 +1,18 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxlint/main/configuration_schema.json",
   "plugins": ["react", "oxc"],
+  "ignorePatterns": ["dist/**", "node_modules/**", "public_originals_raw/**"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "off",
+    "style": "off"
+  },
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react/react-in-jsx-scope": "off",
+    "react/purity": "off",
+    "react/exhaustive-effect-dependencies": "off"
   }
 }
