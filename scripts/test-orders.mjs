@@ -1,36 +1,9 @@
-// Simple smoke test for api/orders.js - runs the handler with stubbed googleapis.
-const Module = require('module');
-const origLoad = Module._load;
+// Test script for api/orders.js (ESM). Stubs googleapis via module.register.
+import { register } from 'node:module';
 
-let appendCalls = [];
+globalThis.__appendCalls = [];
 
-Module._load = function (req, ...args) {
-  if (req === 'googleapis') {
-    return {
-      google: {
-        auth: {
-          JWT: class {
-            constructor() {}
-            async authorize() {}
-          },
-        },
-        sheets: () => ({
-          spreadsheets: {
-            values: {
-              get: async () => ({ data: { values: [['Order ID']] } }),
-              update: async () => ({}),
-              append: async (opts) => {
-                appendCalls.push(opts);
-                return {};
-              },
-            },
-          },
-        }),
-      },
-    };
-  }
-  return origLoad.call(this, req, ...args);
-};
+register('./googleapis-stub.mjs', import.meta.url);
 
 function mockRes() {
   return {
@@ -41,6 +14,10 @@ function mockRes() {
     status(c) { this.statusCode = c; return this; },
     json(o) { this.body = o; return this; },
   };
+}
+
+function appendCalls() {
+  return globalThis.__appendCalls;
 }
 
 async function test(name, fn) {
@@ -57,7 +34,7 @@ async function test(name, fn) {
   delete process.env.GOOGLE_PRIVATE_KEY;
   delete process.env.GOOGLE_SHEET_ID;
 
-  const handler = require('../api/orders.cjs');
+  const { default: handler } = await import('../api/orders.js');
 
   await test('missing env -> 503', async () => {
     const res = mockRes();
@@ -76,7 +53,7 @@ async function test(name, fn) {
   });
 
   await test('tampered price ignored (server catalog price used)', async () => {
-    appendCalls = [];
+    globalThis.__appendCalls = [];
     const res = mockRes();
     await handler({
       method: 'POST',
@@ -87,7 +64,7 @@ async function test(name, fn) {
       },
     }, res);
     if (res.statusCode !== 201) throw new Error(`expected 201 got ${res.statusCode} ${JSON.stringify(res.body)}`);
-    const row = appendCalls[0].requestBody.values[0];
+    const row = appendCalls()[0].requestBody.values[0];
     // row: [orderId, dateTime, productName, qty, name, address, phone, location, charge, total]
     if (row[2] !== 'Arctic Edge') throw new Error(`name bypass: ${row[2]}`);
     if (row[9] !== 350 * 2 + 70) throw new Error(`total bypass: ${row[9]}`);
@@ -95,7 +72,7 @@ async function test(name, fn) {
   });
 
   await test('NaN / missing price does not bypass (price not needed)', async () => {
-    appendCalls = [];
+    globalThis.__appendCalls = [];
     const res = mockRes();
     await handler({
       method: 'POST',
@@ -106,12 +83,12 @@ async function test(name, fn) {
       },
     }, res);
     if (res.statusCode !== 201) throw new Error(`expected 201 got ${res.statusCode}`);
-    const row = appendCalls[0].requestBody.values[0];
+    const row = appendCalls()[0].requestBody.values[0];
     if (row[9] !== 400 + 130) throw new Error(`total: ${row[9]}`);
   });
 
   await test('phone with spaces/dashes normalized', async () => {
-    appendCalls = [];
+    globalThis.__appendCalls = [];
     const res = mockRes();
     await handler({
       method: 'POST',
@@ -122,7 +99,7 @@ async function test(name, fn) {
       },
     }, res);
     if (res.statusCode !== 201) throw new Error(`expected 201 got ${res.statusCode} ${JSON.stringify(res.body)}`);
-    if (appendCalls[0].requestBody.values[0][6] !== '01712345678') throw new Error('phone not normalized');
+    if (appendCalls()[0].requestBody.values[0][6] !== '01712345678') throw new Error('phone not normalized');
   });
 
   await test('unknown product rejected', async () => {

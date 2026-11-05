@@ -3,13 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "description": "Florenziya - Premium sunglasses e-commerce (React + Vite + Vercel)",
-  "type": "module",
   "scripts": {
     "dev": "vercel dev",
     "dev:vite": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "test:api": "node scripts/test-orders.cjs",
+    "test:api": "node scripts/test-orders.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

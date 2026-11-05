@@ -1,4 +1,5 @@
-const crypto = require("crypto");
+import crypto from "crypto";
+import { google } from "googleapis";
 
 const BD_PHONE_REGEX = /^(?:\+?880|0)1[3-9]\d{8}$/;
 const SHEET_NAME = "Orders";
@@ -38,16 +39,11 @@ function generateOrderId() {
   return `FLZ-${crypto.randomUUID()}`;
 }
 
-function invalid(res, message) {
-  return res.status(400).json({ error: message });
-}
-
 function normalizePhone(phone) {
   return String(phone).replace(/[\s-]/g, "");
 }
 
 async function getSheetsClient() {
-  const { google } = require("googleapis");
   const auth = new google.auth.JWT(
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
     null,
@@ -78,7 +74,7 @@ async function ensureHeaderRow(sheets, spreadsheetId) {
   headerReady = true;
 }
 
-module.exports = async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed." });
@@ -89,49 +85,56 @@ module.exports = async function handler(req, res) {
     return res.status(503).json({ error: "Ordering is temporarily unavailable." });
   }
 
+  const invalid = (message) => res.status(400).json({ error: message });
+
   try {
-    const body = req.body || {};
+    let body;
+    try {
+      body = req.body || {};
+    } catch {
+      return invalid("Invalid JSON body.");
+    }
     const { customer, items, location } = body;
 
     if (!customer || typeof customer !== "object" || !Array.isArray(items) || items.length === 0) {
-      return invalid(res, "Invalid order payload.");
+      return invalid( "Invalid order payload.");
     }
     if (items.length > MAX_ITEMS) {
-      return invalid(res, "Too many items in order.");
+      return invalid( "Too many items in order.");
     }
 
     const { name, phone, address } = customer;
     for (const [field, value] of [["name", name], ["phone", phone], ["address", address]]) {
       if (typeof value !== "string" || value.trim().length === 0) {
-        return invalid(res, `Missing or invalid customer field: ${field}.`);
+        return invalid( `Missing or invalid customer field: ${field}.`);
       }
       if (field !== "phone" && value.trim().length > MAX_TEXT[field]) {
-        return invalid(res, `Customer field too long: ${field}.`);
+        return invalid( `Customer field too long: ${field}.`);
       }
     }
 
     const cleanPhone = normalizePhone(phone.trim());
     if (!BD_PHONE_REGEX.test(cleanPhone)) {
-      return invalid(res, "Invalid Bangladeshi phone number.");
+      return invalid( "Invalid Bangladeshi phone number.");
     }
     if (address.trim().length < 8) {
-      return invalid(res, "Please enter a more complete address.");
+      return invalid( "Please enter a more complete address.");
     }
 
     if (location !== "inside" && location !== "outside") {
-      return invalid(res, "Invalid delivery location.");
+      return invalid( "Invalid delivery location.");
     }
     const expectedCharge = DELIVERY_CHARGES[location];
 
     const lines = [];
     let computedSubtotal = 0;
     for (const item of items) {
-      if (!item || typeof item !== "object") return invalid(res, "Invalid item in order.");
+      if (!item || typeof item !== "object") return invalid( "Invalid item in order.");
       const product = PRODUCT_CATALOG[item.id];
-      if (!product) return invalid(res, `Unknown product: ${item.id}.`);
+      if (!product) return invalid( `Unknown product: ${item.id}.`);
       const quantity = Number(item.quantity);
       if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) {
-        return invalid(res, `Invalid quantity for ${product.name}.`);
+        return invalid( `Invalid quantity for ${product.name}.`);
       }
       computedSubtotal += product.price * quantity;
       lines.push({ name: product.name, price: product.price, quantity });
@@ -179,3 +182,6 @@ module.exports = async function handler(req, res) {
     }
   }
 };
+
+export { handler };
+export default handler;

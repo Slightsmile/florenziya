@@ -33,10 +33,10 @@
     }
   ],
   "functions": {
-    "api/orders.cjs": { "maxDuration": 30, "memory": 1024 }
+    "api/orders.js": { "maxDuration": 30, "memory": 1024 }
   },
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" },
-    { "source": "/api", "destination": "/api/orders.cjs" }
+    { "source": "/api", "destination": "/api/orders.js" }
   ]
 }
