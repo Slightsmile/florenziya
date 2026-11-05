@@ -84,7 +84,7 @@ export default function ProductCard({ product }) {
           />
         </button>
         {gallery.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
             {gallery.map((img, i) => (
               <button
                 key={img}
@@ -93,7 +93,7 @@ export default function ProductCard({ product }) {
                   setPaused(true);
                 }}
                 aria-current={i === activeIndex}
-                className={`w-5 h-5 rounded-full transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold ${
+                className={`w-2.5 h-2.5 rounded-full transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold ${
                   i === activeIndex ? "bg-ink" : "bg-ink/30 hover:bg-ink/50"
                 }`}
                 aria-label={`Show image ${i + 1} of ${gallery.length} for ${product.name}`}
