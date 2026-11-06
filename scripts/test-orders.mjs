@@ -68,7 +68,7 @@ async function test(name, fn) {
     // row: [orderId, dateTime, productName, qty, name, address, phone, location, charge, total]
     if (row[2] !== 'Arctic Edge') throw new Error(`name bypass: ${row[2]}`);
     if (row[9] !== 350 * 2 + 70) throw new Error(`total bypass: ${row[9]}`);
-    if (!String(row[0]).startsWith('FLZ-')) throw new Error(`order id: ${row[0]}`);
+    if (!String(row[0]).startsWith('FLRNZA-')) throw new Error(`order id: ${row[0]}`);
   });
 
   await test('NaN / missing price does not bypass (price not needed)', async () => {

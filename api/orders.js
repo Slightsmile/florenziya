@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { google } from "googleapis";
 
 const BD_PHONE_REGEX = /^(?:\+?880|0)1[3-9]\d{8}$/;
@@ -35,8 +34,21 @@ const MAX_ITEMS = 20;
 const MAX_QUANTITY = 10;
 const MAX_TEXT = { name: 100, address: 500 };
 
-function generateOrderId() {
-  return `FLZ-${crypto.randomUUID()}`;
+const ORDER_ID_PREFIX = "FLRNZA-";
+
+async function generateOrderId(sheets, spreadsheetId) {
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${SHEET_NAME}!A2:A`,
+  });
+  const existingIds = new Set((res.data.values || []).map((row) => row[0]));
+  let n = existingIds.size + 1;
+  let orderId = `${ORDER_ID_PREFIX}${String(n).padStart(3, "0")}`;
+  while (existingIds.has(orderId)) {
+    n += 1;
+    orderId = `${ORDER_ID_PREFIX}${String(n).padStart(3, "0")}`;
+  }
+  return orderId;
 }
 
 function normalizePhone(phone) {
@@ -142,7 +154,6 @@ async function handler(req, res) {
 
     const computedTotal = computedSubtotal + expectedCharge;
 
-    const orderId = generateOrderId();
     const dateTime = new Date().toISOString();
     const locationLabel = location === "inside" ? "Inside Dhaka" : "Outside Dhaka";
 
@@ -150,6 +161,7 @@ async function handler(req, res) {
     const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
     await ensureHeaderRow(sheets, spreadsheetId);
+    const orderId = await generateOrderId(sheets, spreadsheetId);
 
     const rows = lines.map((item) => [
       orderId,
