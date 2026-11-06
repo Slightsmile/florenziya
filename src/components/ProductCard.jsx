@@ -112,11 +112,11 @@ export default function ProductCard({ product }) {
           </p>
         )}
         <p className="flex items-baseline gap-2 mb-4">
-          <span className="text-ink/40 line-through text-sm sm:text-base">
-            {formatBDT(product.price + 100)}
-          </span>
           <span className="text-gold font-bold text-base sm:text-lg">
             {formatBDT(product.price)}
+          </span>
+          <span className="text-ink/40 line-through text-sm sm:text-base">
+            {formatBDT(product.price + 100)}
           </span>
         </p>
 
