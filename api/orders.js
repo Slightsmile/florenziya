@@ -44,10 +44,18 @@ function normalizePhone(phone) {
 }
 
 async function getSheetsClient() {
+  const rawKey = process.env.GOOGLE_PRIVATE_KEY || "";
+  const key = rawKey.replace(/\\n/g, "\n");
+  console.log(
+    "GOOGLE_PRIVATE_KEY diagnostic: length=%d startsWithBegin=%s endsWithEnd=%s",
+    key.length,
+    key.startsWith("-----BEGIN PRIVATE KEY-----"),
+    key.trim().endsWith("-----END PRIVATE KEY-----")
+  );
   const auth = new google.auth.JWT(
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
     null,
-    (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
+    key,
     ["https://www.googleapis.com/auth/spreadsheets"]
   );
   await auth.authorize();
