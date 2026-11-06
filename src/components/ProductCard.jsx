@@ -111,8 +111,13 @@ export default function ProductCard({ product }) {
             {product.description}
           </p>
         )}
-        <p className="text-gold font-bold text-base sm:text-lg mb-4">
-          {formatBDT(product.price)}
+        <p className="flex items-baseline gap-2 mb-4">
+          <span className="text-ink/40 line-through text-sm sm:text-base">
+            {formatBDT(product.price + 100)}
+          </span>
+          <span className="text-gold font-bold text-base sm:text-lg">
+            {formatBDT(product.price)}
+          </span>
         </p>
 
         <div className="mt-auto flex flex-col sm:flex-row sm:items-stretch gap-2">
