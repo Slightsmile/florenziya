@@ -99,8 +99,8 @@ export default function Checkout() {
             name: form.name.trim(),
             phone: normalizePhone(form.phone.trim()),
             address: form.address.trim(),
-            location: form.location,
           },
+          location: form.location,
           // Send ids + quantities only. The API prices the order from its
           // own catalog and never trusts client-supplied prices.
           items: items.map((item) => ({
