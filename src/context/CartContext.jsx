@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import { products } from "../data/products";
 import { MAX_QUANTITY_PER_ITEM } from "../lib/money";
+import { trackEvent } from "../lib/metaPixel";
 
 const CartContext = createContext(null);
 
@@ -84,10 +85,16 @@ export function CartProvider({ children }) {
     }
   }, [items]);
 
-  const addToCart = useCallback(
-    (product, quantity = 1) => dispatch({ type: "ADD", payload: { product, quantity } }),
-    []
-  );
+  const addToCart = useCallback((product, quantity = 1) => {
+    dispatch({ type: "ADD", payload: { product, quantity } });
+    trackEvent("AddToCart", {
+      content_ids: [product.id],
+      content_name: product.name,
+      content_type: "product",
+      value: product.price * quantity,
+      currency: "BDT",
+    });
+  }, []);
   const openCart = useCallback(() => setIsCartOpen(true), []);
   const closeCart = useCallback(() => setIsCartOpen(false), []);
   const increment = useCallback((id) => dispatch({ type: "INCREMENT", payload: { id } }), []);

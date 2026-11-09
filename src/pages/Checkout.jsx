@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { DELIVERY_OPTIONS, BD_PHONE_REGEX, formatBDT, normalizePhone } from "../lib/money";
+import { trackEvent } from "../lib/metaPixel";
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart();
@@ -22,6 +23,18 @@ export default function Checkout() {
   const abortRef = useRef(null);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  useEffect(() => {
+    if (items.length === 0) return;
+    trackEvent("InitiateCheckout", {
+      content_ids: items.map((item) => item.id),
+      contents: items.map((item) => ({ id: item.id, quantity: item.quantity })),
+      num_items: items.reduce((sum, item) => sum + item.quantity, 0),
+      value: subtotal,
+      currency: "BDT",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (items.length === 0) {
     return (
@@ -124,6 +137,13 @@ export default function Checkout() {
 
       const orderId = data?.orderId;
       const orderTotal = data?.total;
+      trackEvent("Purchase", {
+        content_ids: items.map((item) => item.id),
+        contents: items.map((item) => ({ id: item.id, quantity: item.quantity })),
+        num_items: items.reduce((sum, item) => sum + item.quantity, 0),
+        value: orderTotal ?? total,
+        currency: "BDT",
+      });
       sessionStorage.setItem(
         "florenziya_last_order",
         JSON.stringify({ orderId, total: orderTotal, at: Date.now() })
